@@ -20,14 +20,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>SmaChart</servlet-name>
 		<url-pattern>/smachart</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Test</servlet-name>
-		<url-pattern>/test</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Test</servlet-name>
-		<servlet-class>com.gerstoft.sma.Test</servlet-class>
-	</servlet>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

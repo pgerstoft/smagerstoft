@@ -11,11 +11,8 @@
 			<attribute name="javadoc_location" value="file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle_1.9.2/appengine-java-sdk-1.9.2/docs/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle_1.9.2/appengine-java-sdk-1.9.2/lib/user/appengine-api-1.0-sdk-1.9.2.jar" sourcepath="/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle_1.9.2/appengine-java-sdk-1.9.2/src/user/appengine-api-1.0-sdk-1.9.2-src.zip">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle_1.9.2/appengine-java-sdk-1.9.2/docs/javadoc/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 7 (MacOS X Default)"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
