@@ -1,13 +1,12 @@
 package com.gerstoft.sma;
 
+import static com.gerstoft.sma.util.Round.round;
+
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.Queue;
 
-import javax.servlet.http.*;
-
-import static com.gerstoft.sma.util.Round.*;
+import javax.servlet.http.HttpServletRequest;
 
 import com.gerstoft.sma.series.MovingAverage;
 import com.gerstoft.sma.series.TimeSeries;
@@ -71,7 +70,7 @@ public class SmaChartServlet extends DataSourceServlet {
 			java.util.Date time = new Date(stockData.getDate().getMillis());
 
 			if (size - count >= MOVING_AVERAGE) {
-				close.add(time, stockData.getClose());
+                close.add(time, stockData.getCloseAdj());
 				count++;
 			}
 
