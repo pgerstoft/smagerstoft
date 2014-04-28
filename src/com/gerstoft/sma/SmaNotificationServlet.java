@@ -1,11 +1,13 @@
 package com.gerstoft.sma;
 
+import static com.gerstoft.sma.util.Round.round;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 
 import com.google.visualization.datasource.DataSourceServlet;
 import com.google.visualization.datasource.base.DataSourceException;
@@ -14,8 +16,6 @@ import com.google.visualization.datasource.datatable.ColumnDescription;
 import com.google.visualization.datasource.datatable.DataTable;
 import com.google.visualization.datasource.datatable.value.ValueType;
 import com.google.visualization.datasource.query.Query;
-
-import static com.gerstoft.sma.util.Round.*;
 
 @SuppressWarnings("serial")
 public class SmaNotificationServlet extends DataSourceServlet {
@@ -29,7 +29,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] ALEX_SYMBOLS = "BND,DBC,TIP,GSG,RWX,VB,VEU,VNQ,VTI,VWO"
 			.split(",");
 
-	private static final String[] PHILIP_SYMBOLS = "ALFA,SWPPX,SWSSX,SWISX,VWO,SWLBX,SWRSX,SCHH,OTPIX,JERTX,USO,GLD,SLV,IEF"
+    private static final String[] PHILIP_SYMBOLS = "ALFA,SWPPX,SWSSX,SWISX,VWO,SWLBX,SWRSX,SCHH,OTPIX,JERTX,USO,GLD,SLV,IEF,GSG"
 			.split(",");
 
 	private static final String[] JUSTIN_SYMBOLS = "VMMXX, PFORX, WACPX, VMISX, VSISX, VIFSX, RERGX, MINHX"
@@ -38,8 +38,9 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] KAREN_SYMBOLS = "GENIX,DBC,GLD,JNK,DBA,DBC,SCHA,SCHB,SCHE,SCHF,RWX,SCHH,BND,TIP,IEF"
 			.split(",");
 
-	private static final String[] COUNTRY_SYMBOLS = "EWS,EWK,EWH,SPY,EWU,EWJ,EWT,EWA,EWL,EZA,EWW,EWN,EWQ,EWC,EWO,EWD,RSX,EWP,EWY,EWI,FXI,EWZ,EWG,ECH,IDX,EPI,THD"
-			.split(",");
+    // "EDEN,EWS,EWK,EWH,SPY,EWU,EWJ,EWT,EWA,EWL,EZA,EWW,EWN,EWQ,EWC,EWO,EWD,RSX,EWP,EWY,EWI,FXI,EWZ,EWG,ECH,IDX,EPI,THD"
+    private static final String[] COUNTRY_SYMBOLS = "EGPT EWI EDEN EWP EWK EIRL EPI EWQ EIS INP EZA EWL EWG EWA PIN SPY QQQ EPOL EWC EWU PGJ EWY EWT EWN EWD EWZ GXG EWO IWM EWH IDX EWS EIDO EWM THD TUR GXC FXI EPU EWW JPP EWJ ITF BRF ECH RSX RBL"
+            .split(" ");
 
 	@Override
 	public DataTable generateDataTable(Query arg0, HttpServletRequest arg1)
