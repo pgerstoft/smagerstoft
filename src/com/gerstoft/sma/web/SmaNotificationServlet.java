@@ -3,9 +3,12 @@ package com.gerstoft.sma.web;
 import static com.gerstoft.sma.util.Round.round;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +34,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] ALEX_SYMBOLS = "BND,DBC,TIP,GSG,RWX,VB,VEU,VNQ,VTI,VWO"
 			.split(",");
 
-    private static final String[] PHILIP_SYMBOLS = "ALFA,SWPPX,SWSSX,SWISX,VWO,SWLBX,SWRSX,SCHH,OTPIX,JERTX,USO,GLD,SLV,IEF,GSG"
+	private static final String[] PHILIP_SYMBOLS = "ALFA,SWPPX,SWSSX,SWISX,VWO,SWLBX,SWRSX,SCHH,OTPIX,JERTX,USO,GLD,SLV,IEF,GSG"
 			.split(",");
 
 	private static final String[] JUSTIN_SYMBOLS = "VMMXX, PFORX, WACPX, VMISX, VSISX, VIFSX, RERGX, MINHX"
@@ -40,9 +43,20 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] KAREN_SYMBOLS = "GENIX,DBC,GLD,JNK,DBA,DBC,SCHA,SCHB,SCHE,SCHF,RWX,SCHH,BND,TIP,IEF"
 			.split(",");
 
-    // "EDEN,EWS,EWK,EWH,SPY,EWU,EWJ,EWT,EWA,EWL,EZA,EWW,EWN,EWQ,EWC,EWO,EWD,RSX,EWP,EWY,EWI,FXI,EWZ,EWG,ECH,IDX,EPI,THD"
-    private static final String[] COUNTRY_SYMBOLS = "EGPT EWI EDEN EWP EWK EIRL EPI EWQ EIS INP EZA EWL EWG EWA PIN SPY QQQ EPOL EWC EWU PGJ EWY EWT EWN EWD EWZ GXG EWO IWM EWH IDX EWS EIDO EWM THD TUR GXC FXI EPU EWW JPP EWJ ITF BRF ECH RSX RBL"
-            .split(" ");
+	private static final String[] COUNTRY_SYMBOLS = "EGPT EWI EDEN EWP EWK EIRL EPI EWQ EIS INP EZA EWL EWG EWA PIN SPY QQQ EPOL EWC EWU PGJ EWY EWT EWN EWD EWZ GXG EWO IWM EWH IDX EWS EIDO EWM THD TUR GXC FXI EPU EWW JPP EWJ ITF BRF ECH RSX RBL"
+			.split(" ");
+
+	public static Set<String> ALL_SYMBOLS = new HashSet<String>() {
+		{
+			addAll(Arrays.asList(ANDY_SYMBOLS));
+			addAll(Arrays.asList(ANDY_2_SYMBOLS));
+			addAll(Arrays.asList(ALEX_SYMBOLS));
+			addAll(Arrays.asList(PHILIP_SYMBOLS));
+			addAll(Arrays.asList(JUSTIN_SYMBOLS));
+			addAll(Arrays.asList(KAREN_SYMBOLS));
+			addAll(Arrays.asList(COUNTRY_SYMBOLS));
+		}
+	};
 
 	@Override
 	public DataTable generateDataTable(Query arg0, HttpServletRequest arg1)

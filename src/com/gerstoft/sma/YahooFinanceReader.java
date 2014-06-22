@@ -26,19 +26,33 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
  * 
  */
 public final class YahooFinanceReader {
+	// Timeout to avoid requests being rejected
+	private static final int WAIT = 1000;
+
+	private static YahooFinanceReader instance;
+
+	private volatile long lastYahooRequest = 0;
 
 	private YahooFinanceReader() {
 		// private constructor
 	}
 
+	private static synchronized YahooFinanceReader getYahooFinanceReader() {
+		if (instance == null) {
+			instance = new YahooFinanceReader();
+		}
+
+		return instance;
+	}
+
 	public static PriorityQueue<DailyStockData> getYahooFinanceData(
 			final String symbol, final BusinessDay start, final BusinessDay end) {
 		String url = buildUrl(symbol, start, end);
-		return getData(url);
+		return getYahooFinanceReader().getData(url);
 	}
 
-	public static String buildUrl(final String symbol, final BusinessDay start,
-			final BusinessDay end) {
+	private static String buildUrl(final String symbol,
+			final BusinessDay start, final BusinessDay end) {
 		StringBuilder uri = new StringBuilder();
 		uri.append("http://ichart.finance.yahoo.com/table.csv");
 		uri.append("?s=").append(symbol.toUpperCase(Locale.US));
@@ -54,7 +68,7 @@ public final class YahooFinanceReader {
 		return uri.toString();
 	}
 
-	private static PriorityQueue<DailyStockData> getData(final String url) {
+	private PriorityQueue<DailyStockData> getData(final String url) {
 
 		PriorityQueue<DailyStockData> stockData;
 
@@ -65,9 +79,19 @@ public final class YahooFinanceReader {
 
 		if (stockData == null) {
 			stockData = new PriorityQueue<DailyStockData>();
-			BufferedReader urlReader;
+			BufferedReader urlReader = null;
 
 			try {
+				long timeSinceLastRequest = System.currentTimeMillis()
+						- lastYahooRequest;
+				if (timeSinceLastRequest < WAIT) {
+					try {
+						Thread.sleep(WAIT - timeSinceLastRequest);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				lastYahooRequest = System.currentTimeMillis();
 				urlReader = new BufferedReader(new InputStreamReader(new URL(
 						url).openStream()));
 				String line = urlReader.readLine(); // ignore Header
@@ -81,15 +105,23 @@ public final class YahooFinanceReader {
 
 					line = urlReader.readLine();
 				}
-				urlReader.close();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				if (urlReader != null) {
+					try {
+						urlReader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
-
-			syncCache.put(url, toByteArray(stockData)); // populate cache
-			System.out.print("to cache");
+			if (!stockData.isEmpty()) {
+				syncCache.put(url, toByteArray(stockData)); // populate cache
+				System.out.print("to cache");
+			}
 		} else {
 			System.out.print("from cache");
 		}
