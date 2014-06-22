@@ -1,4 +1,4 @@
-package com.gerstoft.sma;
+package com.gerstoft.sma.web;
 
 import static com.gerstoft.sma.util.Round.round;
 
@@ -8,6 +8,8 @@ import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.gerstoft.sma.DailyStockData;
+import com.gerstoft.sma.KestnerSmaStrategy;
 import com.gerstoft.sma.series.MovingAverage;
 import com.gerstoft.sma.series.TimeSeries;
 import com.gerstoft.sma.series.TimeSeriesDataItem;

@@ -1,4 +1,4 @@
-package com.gerstoft.sma;
+package com.gerstoft.sma.web;
 
 import static com.gerstoft.sma.util.Round.round;
 
@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.gerstoft.sma.KestnerSmaStrategy;
+import com.gerstoft.sma.RelativeStrength;
 import com.google.visualization.datasource.DataSourceServlet;
 import com.google.visualization.datasource.base.DataSourceException;
 import com.google.visualization.datasource.base.TypeMismatchException;

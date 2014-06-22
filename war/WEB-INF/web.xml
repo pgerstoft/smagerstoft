@@ -6,7 +6,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
 		<servlet-name>smaNotification</servlet-name>
-		<servlet-class>com.gerstoft.sma.SmaNotificationServlet</servlet-class>
+		<servlet-class>com.gerstoft.sma.web.SmaNotificationServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>smaNotification</servlet-name>
@@ -14,7 +14,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>SmaChart</servlet-name>
-		<servlet-class>com.gerstoft.sma.SmaChartServlet</servlet-class>
+		<servlet-class>com.gerstoft.sma.web.SmaChartServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SmaChart</servlet-name>
