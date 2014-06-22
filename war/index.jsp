@@ -31,7 +31,7 @@
 		<p>Buy a security if it is in the top 5 securities and above its
 			200 day moving average.</p>
 		<p>Every holding is 1/5 of your portfolio. Any money left over is
-			put into a bond fund. So if you only have 3 securities then 40% of
+			put into a bond fund. For example, if you only have 3 securities then 40% of
 			your portfolio is in bonds.</p>
 		<p><a href="mailto:philipgerstoft@gmail.com?Subject=QTAA%20questions" target="_top">Let me know</a> if I have been unclear.</p>
 	</div>
