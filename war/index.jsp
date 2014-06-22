@@ -23,6 +23,8 @@
 		<p>In a <a href="http://mebfaber.com/2012/03/05/how-to-get-to-20-or-extensions-to-qtaa/">backtest</a>, this combination of strategies had a 13% return with a max drawdown
 			of 10% (compare this to a buy and hold max drawdown of ~50%).</p>
 
+		<p>The buy/hold/sell value for each security is decided using <a href="http://marketsci.wordpress.com/2009/05/10/kestner%E2%80%99s-buffered-sma-trend-following-strategy/">Kestner's Smooth Moving Average. </a></p>
+
 		<h3>Recommended Usage</h3>
 		<p>On the last day of every month check the top 5 securities
 			sorted on an average of their 3, 6, and 12 months returns. Sell any
