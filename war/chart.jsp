@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SMA Relative Strength Table</title>
-  <!--Load the AJAX API-->
-  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-  <script type="text/javascript">
+<title>SMA Relative Strength Table</title>
+<!--Load the AJAX API-->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
 
   //Load the Visualization API and the ready-made Google table visualization
   google.load('visualization', '1', {'packages':['corechart']});
@@ -18,7 +18,7 @@
   function init() {
 
     // Specify the data source URL.
-    var query = new google.visualization.Query('smachart?symbol=<%= request.getParameter("symbol") %>');
+    var query = new google.visualization.Query('smachart?symbol=<%=request.getParameter("symbol")%>');
 
     // Send the query with a callback function.
     query.send(handleQueryResponse);
@@ -34,16 +34,20 @@
     // Draw the visualization.
     var data = response.getDataTable();
     var options = {
-          title: '<%= request.getParameter("symbol") %>',
-        };
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
-  }
-  </script>
+          title: '<%=request.getParameter("symbol")%>',
+		};
+		var chart = new google.visualization.LineChart(document
+				.getElementById('chart_div'));
+		chart.draw(data, options);
+	}
+</script>
 </head>
 <body>
-  <h1>Chart with SMA</h1>
-  <!--Div that will hold the visualization-->
-  <div id="chart_div" style="height: 500px;"></div>
+	<%@include file="_nav_bar.html"%>
+	<div class="container">
+		<h1>Chart with SMA</h1>
+		<!--Div that will hold the visualization-->
+		<div id="chart_div" style="height: 500px;"></div>
+	</div>
 </body>
 </html>
