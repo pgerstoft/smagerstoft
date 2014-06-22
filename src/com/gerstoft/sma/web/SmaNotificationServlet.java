@@ -66,8 +66,6 @@ public class SmaNotificationServlet extends DataSourceServlet {
 		DataTable data = new DataTable();
 		ArrayList<ColumnDescription> cd = new ArrayList<ColumnDescription>();
 		cd.add(new ColumnDescription("symbol", ValueType.TEXT, "Symbol"));
-		cd.add(new ColumnDescription("description", ValueType.TEXT,
-				"Description"));
 		cd.add(new ColumnDescription("action", ValueType.TEXT, "Action"));
 		cd.add(new ColumnDescription("close", ValueType.NUMBER, "Close"));
 		cd.add(new ColumnDescription("highsma", ValueType.NUMBER, "High SMA"));
@@ -120,13 +118,12 @@ public class SmaNotificationServlet extends DataSourceServlet {
 				KestnerSmaStrategy stock = stocks.get(relativeStrength
 						.getSymbol());
 				data.addRowFromValues(getLink(stock.getSymbol()), stock
-						.getDescription(), stock.getAction(), round(stock
-						.getMostRecentClose()), round(stock.getHighSMA()),
-						round(stock.getLowSMA()), round(stock.getCloseSMA()),
-						round(relativeStrength.get3MonthReturn()),
-						round(relativeStrength.get6MonthReturn()),
-						round(relativeStrength.get12MonthReturn()),
-						round(relativeStrength
+						.getAction(), round(stock.getMostRecentClose()),
+						round(stock.getHighSMA()), round(stock.getLowSMA()),
+						round(stock.getCloseSMA()), round(relativeStrength
+								.get3MonthReturn()), round(relativeStrength
+								.get6MonthReturn()), round(relativeStrength
+								.get12MonthReturn()), round(relativeStrength
 								.getAverageThreeSixTwelveReturns()));
 			}
 
