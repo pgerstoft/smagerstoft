@@ -8,12 +8,12 @@
 <body>
 	<%@include file="_nav_bar.html"%>
 	<div class="container">
-		<h1 class="page-header">SMA Relative Strength</h1>
+		<h1 class="page-header">QTAA Relative Strength</h1>
 		<h3>Overview</h3>
 		<p>
 			This website is meant to help implement the <a
 				href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=962461">Quantitative
-				Tactical Asset Allocation</a> strategy described by <a
+				Tactical Asset Allocation</a> (QTAA) strategy described by <a
 				href="http://mebfaber.com/"> Mebane Faber</a>. The stocks in the
 			tables are ranked by the average of their 3, 6, and 12 months
 			returns. This is an optimization to QTAA that Mebane Faber calls <a
