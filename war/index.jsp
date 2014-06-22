@@ -20,10 +20,18 @@
 				href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=1585517">Relative
 				Strength</a>.
 		</p>
-		<p>In a <a href="http://mebfaber.com/2012/03/05/how-to-get-to-20-or-extensions-to-qtaa/">backtest</a>, this combination of strategies had a 13% return with a max drawdown
-			of 10% (compare this to a buy and hold max drawdown of ~50%).</p>
+		<p>
+			In a <a
+				href="http://mebfaber.com/2012/03/05/how-to-get-to-20-or-extensions-to-qtaa/">backtest</a>,
+			this combination of strategies had a 13% return with a max drawdown
+			of 10% (compare this to a buy and hold max drawdown of ~50%).
+		</p>
 
-		<p>The buy/hold/sell value for each security is decided using <a href="http://marketsci.wordpress.com/2009/05/10/kestner%E2%80%99s-buffered-sma-trend-following-strategy/">Kestner's Smooth Moving Average. </a></p>
+		<p>
+			The buy/hold/sell value for each security is decided using <a
+				href="http://marketsci.wordpress.com/2009/05/10/kestner%E2%80%99s-buffered-sma-trend-following-strategy/">Kestner's
+				Smooth Moving Average. </a>
+		</p>
 
 		<h3>Recommended Usage</h3>
 		<p>On the last day of every month check the top 5 securities
@@ -33,9 +41,12 @@
 		<p>Buy a security if it is in the top 5 securities and above its
 			200 day moving average.</p>
 		<p>Every holding is 1/5 of your portfolio. Any money left over is
-			put into a bond fund. For example, if you only have 3 securities then 40% of
-			your portfolio is in bonds.</p>
-		<p><a href="mailto:philipgerstoft@gmail.com?Subject=QTAA%20questions" target="_top">Let me know</a> if I have been unclear.</p>
+			put into a bond fund. For example, if you only have 3 securities then
+			40% of your portfolio is in bonds.</p>
+		<p>
+			<a href="mailto:philipgerstoft@gmail.com?Subject=QTAA%20questions"
+				target="_top">Let me know</a> if anything is unclear or if you have any suggestions.
+		</p>
 	</div>
 
 </body>
