@@ -30,7 +30,7 @@
 		<p>
 			The buy/hold/sell value for each security is decided using <a
 				href="http://marketsci.wordpress.com/2009/05/10/kestner%E2%80%99s-buffered-sma-trend-following-strategy/">Kestner's
-				Smooth Moving Average. </a>
+				Smooth Moving Average </a> (SMA).
 		</p>
 
 		<h3>Recommended Usage</h3>
