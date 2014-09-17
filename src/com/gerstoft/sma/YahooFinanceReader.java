@@ -31,8 +31,6 @@ public final class YahooFinanceReader {
 
 	private static YahooFinanceReader instance;
 
-	private volatile long lastYahooRequest = 0;
-
 	private YahooFinanceReader() {
 		// private constructor
 	}
@@ -82,16 +80,6 @@ public final class YahooFinanceReader {
 			BufferedReader urlReader = null;
 
 			try {
-				long timeSinceLastRequest = System.currentTimeMillis()
-						- lastYahooRequest;
-				if (timeSinceLastRequest < WAIT) {
-					try {
-						Thread.sleep(WAIT - timeSinceLastRequest);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				lastYahooRequest = System.currentTimeMillis();
 				urlReader = new BufferedReader(new InputStreamReader(new URL(
 						url).openStream()));
 				String line = urlReader.readLine(); // ignore Header
