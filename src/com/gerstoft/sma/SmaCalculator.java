@@ -1,28 +1,20 @@
 package com.gerstoft.sma;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.List;
 
 public class SmaCalculator {
 
-	public static double getSMA(final Queue<DailyStockData> data,
+	public static double getSMA(final List<DailyStockData> data,
 			GetDataFunc func, int period) {
-		Queue<DailyStockData> temp = new PriorityQueue<DailyStockData>(data);
-		double sma;
-
-		int count = 0;
-		double sum = 0;
-
-		while (count < period) {
-			if (temp.isEmpty()) {
-				return -1;
-			}
-			DailyStockData stock = temp.poll();
-			sum += func.getValue(stock);
-			count++;
+		if (period > data.size()) {
+			return -1;
 		}
 
-		sma = sum / period;
-		return sma;
+		double sum = 0;
+		for (DailyStockData item : data.subList(0, period)) {
+			sum += func.getValue(item);
+		}
+
+		return sum / period;
 	}
 }

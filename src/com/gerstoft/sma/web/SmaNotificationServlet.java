@@ -14,11 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.gerstoft.sma.KestnerSmaStrategy;
 import com.gerstoft.sma.RelativeStrength;
+import com.gerstoft.sma.StockSymbol;
 import com.google.visualization.datasource.DataSourceServlet;
 import com.google.visualization.datasource.base.DataSourceException;
 import com.google.visualization.datasource.base.TypeMismatchException;
 import com.google.visualization.datasource.datatable.ColumnDescription;
 import com.google.visualization.datasource.datatable.DataTable;
+import com.google.visualization.datasource.datatable.TableCell;
+import com.google.visualization.datasource.datatable.TableRow;
 import com.google.visualization.datasource.datatable.value.ValueType;
 import com.google.visualization.datasource.query.Query;
 
@@ -59,7 +62,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	};
 
 	@Override
-	public DataTable generateDataTable(Query arg0, HttpServletRequest arg1)
+	public DataTable generateDataTable(Query query, HttpServletRequest request)
 			throws DataSourceException {
 
 		// Create a data table,
@@ -83,7 +86,8 @@ public class SmaNotificationServlet extends DataSourceServlet {
 
 		List<RelativeStrength> strength = new ArrayList<RelativeStrength>();
 
-		String requester = arg1.getParameter("requester").trim();
+		String requester = request.getParameter("requester").trim();
+
 		String[] symbols;
 		if ("karen".equals(requester)) {
 			symbols = KAREN_SYMBOLS;
@@ -101,9 +105,10 @@ public class SmaNotificationServlet extends DataSourceServlet {
 			symbols = PHILIP_SYMBOLS;
 		}
 
-		Map<String, KestnerSmaStrategy> stocks = new HashMap<String, KestnerSmaStrategy>();
+		Map<StockSymbol, KestnerSmaStrategy> stocks = new HashMap<>();
 		for (String symbol : symbols) {
-			stocks.put(symbol, new KestnerSmaStrategy(symbol, ""));
+			StockSymbol stockSymbol = new StockSymbol(symbol);
+			stocks.put(stockSymbol, new KestnerSmaStrategy(stockSymbol));
 		}
 
 		for (KestnerSmaStrategy stock : stocks.values()) {
@@ -114,17 +119,25 @@ public class SmaNotificationServlet extends DataSourceServlet {
 
 		// Fill the data table.
 		try {
-			for (RelativeStrength relativeStrength : strength) {
-				KestnerSmaStrategy stock = stocks.get(relativeStrength
-						.getSymbol());
-				data.addRowFromValues(getLink(stock.getSymbol()), stock
-						.getAction(), round(stock.getMostRecentClose()),
-						round(stock.getHighSMA()), round(stock.getLowSMA()),
-						round(stock.getCloseSMA()), round(relativeStrength
-								.get3MonthReturn()), round(relativeStrength
-								.get6MonthReturn()), round(relativeStrength
-								.get12MonthReturn()), round(relativeStrength
-								.getAverageThreeSixTwelveReturns()));
+			for (RelativeStrength rs : strength) {
+				KestnerSmaStrategy stock = stocks.get(rs.getSymbol());
+				TableRow row = new TableRow();
+				row.addCell(getLink(stock.getSymbol()));
+
+				String action = stock.getAction();
+
+				addCell(row, action, action);
+				addCell(row, round(stock.getMostRecentClose()), action);
+				addCell(row, round(stock.getHighSMA()), action);
+				addCell(row, round(stock.getLowSMA()), action);
+				addCell(row, round(stock.getLowSMA()), action);
+				addCell(row, round(rs.getReturnNMonthsBack(3)), action);
+				addCell(row, round(rs.getReturnNMonthsBack(6)), action);
+				addCell(row, round(rs.getReturnNMonthsBack(12)), action);
+				addCell(row, round(rs.getAverageThreeSixTwelveReturns()),
+						action);
+
+				data.addRow(row);
 			}
 
 		} catch (TypeMismatchException e) {
@@ -133,8 +146,24 @@ public class SmaNotificationServlet extends DataSourceServlet {
 		return data;
 	}
 
-	private String getLink(String s) {
-		return "<a href=\"/chart.jsp?symbol=" + s + "\">" + s + "</a>";
+	private void addCell(TableRow row, String action, String action2) {
+		TableCell cell = new TableCell(action);
+		// HACK! google-visualization-table-td
+		// cell.setCustomProperty("className", action.toLowerCase() + " "
+		// + "google-visualization-table-td");
+		row.addCell(cell);
+	}
+
+	private void addCell(TableRow row, double val, String action) {
+		TableCell cell = new TableCell(val);
+		// HACK! google-visualization-table-td
+		// cell.setCustomProperty("className", action.toLowerCase() + " "
+		// + "google-visualization-table-td");
+		row.addCell(cell);
+	}
+
+	private String getLink(Object s) {
+		return "<a href='chart.jsp?symbol=" + s + "'>" + s + "</a>";
 	}
 
 }

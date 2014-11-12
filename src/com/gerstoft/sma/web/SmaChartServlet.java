@@ -4,12 +4,15 @@ import static com.gerstoft.sma.util.Round.round;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.gerstoft.sma.BusinessDay;
 import com.gerstoft.sma.DailyStockData;
 import com.gerstoft.sma.KestnerSmaStrategy;
+import com.gerstoft.sma.StockSymbol;
 import com.gerstoft.sma.series.MovingAverage;
 import com.gerstoft.sma.series.TimeSeries;
 import com.gerstoft.sma.series.TimeSeriesDataItem;
@@ -29,35 +32,35 @@ import com.ibm.icu.util.TimeZone;
 public class SmaChartServlet extends DataSourceServlet {
 
 	private static final long serialVersionUID = 1L;
-	public static final int MOVING_AVERAGE = 200;
 	public static final int DAYS_IN_YEAR = 365;
-	public static final int BUSINESS_DAYS_IN_YEAR = 252;
 
 	@Override
-	public DataTable generateDataTable(Query arg0, HttpServletRequest arg1)
+	public DataTable generateDataTable(Query arg0, HttpServletRequest request)
 			throws DataSourceException {
 
-		String symbol = arg1.getParameter("symbol");
+		String symbolParam = request.getParameter("symbol");
 
 		// Create a data table,
 		DataTable data = new DataTable();
 
-		if (Strings.isNullOrEmpty(symbol)) {
+		if (Strings.isNullOrEmpty(symbolParam)) {
 			return data;
 		}
 
-		ArrayList<ColumnDescription> cd = new ArrayList<ColumnDescription>();
-		cd.add(new ColumnDescription("date", ValueType.DATE, "Date"));
+		StockSymbol symbol = new StockSymbol(symbolParam);
 
+		List<ColumnDescription> cd = new ArrayList<>();
+		cd.add(new ColumnDescription("date", ValueType.DATE, "Date"));
 		cd.add(new ColumnDescription("close", ValueType.NUMBER, "Close"));
 		cd.add(new ColumnDescription("highsma", ValueType.NUMBER, "High SMA"));
 		cd.add(new ColumnDescription("lowsma", ValueType.NUMBER, "Low SMA"));
 		cd.add(new ColumnDescription("closesma", ValueType.NUMBER, "Close SMA"));
+
 		data.addColumns(cd);
 
 		System.out.println(symbol);
 
-		KestnerSmaStrategy stock = new KestnerSmaStrategy(symbol, "");
+		KestnerSmaStrategy stock = new KestnerSmaStrategy(symbol);
 		stock.downloadData();
 
 		TimeSeries close = new TimeSeries("Close");
@@ -65,14 +68,14 @@ public class SmaChartServlet extends DataSourceServlet {
 		TimeSeries highForSMA = new TimeSeries("High");
 		TimeSeries lowForSMA = new TimeSeries("Low");
 
-		Queue<DailyStockData> dataQueue = stock.getStockData();
+		List<DailyStockData> dataQueue = stock.getStockData();
 		int size = dataQueue.size();
 		int count = 0;
 		for (DailyStockData stockData : dataQueue) {
 			java.util.Date time = new Date(stockData.getDate().getMillis());
 
-			if (size - count >= MOVING_AVERAGE) {
-                close.add(time, stockData.getCloseAdj());
+			if (size - count >= KestnerSmaStrategy.KESTNER_SMOOTHING_FACTOR) {
+				close.add(time, stockData.getCloseAdj());
 				count++;
 			}
 
@@ -81,7 +84,9 @@ public class SmaChartServlet extends DataSourceServlet {
 			highForSMA.add(time, stockData.getHighAdj());
 		}
 
-		int newMA = (int) ((double) MOVING_AVERAGE / BUSINESS_DAYS_IN_YEAR * DAYS_IN_YEAR);
+		// convert from business year to calendar year
+		int newMA = (int) ((double) KestnerSmaStrategy.KESTNER_SMOOTHING_FACTOR
+				/ BusinessDay.NUMBER_IN_YEAR * DAYS_IN_YEAR);
 
 		TimeSeries closeSma = MovingAverage.createMovingAverage(closeForSMA,
 				"Close 200 Day MA", newMA, newMA);

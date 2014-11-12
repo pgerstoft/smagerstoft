@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gerstoft.sma.KestnerSmaStrategy;
+import com.gerstoft.sma.StockSymbol;
 
 public class RecacheServlet extends HttpServlet {
 
@@ -13,7 +14,8 @@ public class RecacheServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		for (String symbol : SmaNotificationServlet.ALL_SYMBOLS) {
-			KestnerSmaStrategy stock = new KestnerSmaStrategy(symbol, "");
+			KestnerSmaStrategy stock = new KestnerSmaStrategy(new StockSymbol(
+					symbol));
 			try {
 				stock.downloadData();
 			} catch (RuntimeException e) {

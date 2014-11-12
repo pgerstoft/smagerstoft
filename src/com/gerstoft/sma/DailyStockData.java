@@ -13,9 +13,12 @@ public class DailyStockData implements Comparable<DailyStockData>, Serializable 
 	private final double close;
 	private final double closeAdj;
 	private final BusinessDay date;
+	private final StockSymbol symbol;
 
-	public DailyStockData(final BusinessDay date, final double high,
-			final double low, final double close, final double closeAdj) {
+	public DailyStockData(final StockSymbol symbol, final BusinessDay date,
+			final double high, final double low, final double close,
+			final double closeAdj) {
+		this.symbol = symbol;
 		this.date = date;
 		this.high = high;
 		this.low = low;
@@ -36,10 +39,18 @@ public class DailyStockData implements Comparable<DailyStockData>, Serializable 
 	}
 
 	public double getHighAdj() {
+		if (symbol.isMutualFund()) {
+			return getCloseAdj() * (1.0 + .01);
+		}
+
 		return high * (1 - (close - closeAdj) / (close));
 	}
 
 	public double getLowAdj() {
+		if (symbol.isMutualFund()) {
+			return getCloseAdj() * (1.0 - .01);
+		}
+
 		return low * (1 - (close - closeAdj) / (close));
 	}
 

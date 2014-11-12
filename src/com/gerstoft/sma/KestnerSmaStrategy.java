@@ -1,74 +1,63 @@
 package com.gerstoft.sma;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
-public class KestnerSmaStrategy extends AbstractSmaStrategy {
+public class KestnerSmaStrategy {
 
-	private static final int KESTNER_SMOOTHING_FACTOR = 200;
+	public static final int KESTNER_SMOOTHING_FACTOR = 200;
 
 	private static final DecimalFormat TWO_DECIMAL = new DecimalFormat("#.##");
-
-	private static final String[] COLUMNS = new String[] { "Symbol",
-			"Description", "Action", "Close", "High SMA", "Low SMA",
-			"Close SMA" };
 
 	private double highSMA;
 	private double lowSMA;
 	private double closeSMA;
 
-	private final String description;
+	private final StockSymbol symbol;
+	private List<DailyStockData> data;
 
-	public KestnerSmaStrategy(String symbol, Object object) {
-		super(symbol, KESTNER_SMOOTHING_FACTOR);
-		if (object == null) {
-			this.description = "";
-		} else {
-			this.description = object.toString();
-		}
+	public KestnerSmaStrategy(StockSymbol symbol) {
+		this.symbol = symbol;
 	}
 
-	public String getDescription() {
-		return description;
+	public void downloadData() {
+		this.data = new StockDataGetter(symbol, KESTNER_SMOOTHING_FACTOR * 2)
+				.getStockData();
+		computeSMAs();
 	}
 
-	@Override
+	public StockSymbol getSymbol() {
+		return symbol;
+	}
+
+	public int getSMAValue() {
+		return KESTNER_SMOOTHING_FACTOR;
+	}
+
+	public List<DailyStockData> getStockData() {
+		return data;
+	}
+
 	protected void computeSMAs() {
 
-		if (isMutualFund()) {
-			highSMA = SmaCalculator.getSMA(getStockData(), new GetDataFunc() {
-				public double getValue(DailyStockData data) {
-					return data.getCloseAdj() * 1.01;
-				}
-			}, KESTNER_SMOOTHING_FACTOR);
+		highSMA = SmaCalculator.getSMA(getStockData(), new GetDataFunc() {
+			public double getValue(DailyStockData data) {
+				return data.getHighAdj();
+			}
+		}, KESTNER_SMOOTHING_FACTOR);
 
-			lowSMA = SmaCalculator.getSMA(getStockData(), new GetDataFunc() {
-				public double getValue(DailyStockData data) {
-					return data.getCloseAdj() * .99;
-				}
-			}, KESTNER_SMOOTHING_FACTOR);
-		} else {
-			highSMA = SmaCalculator.getSMA(getStockData(), new GetDataFunc() {
-				public double getValue(DailyStockData data) {
-					return data.getHighAdj();
-				}
-			}, KESTNER_SMOOTHING_FACTOR);
+		lowSMA = SmaCalculator.getSMA(getStockData(), new GetDataFunc() {
+			public double getValue(DailyStockData data) {
+				return data.getLowAdj();
+			}
+		}, KESTNER_SMOOTHING_FACTOR);
 
-			lowSMA = SmaCalculator.getSMA(getStockData(), new GetDataFunc() {
-				public double getValue(DailyStockData data) {
-					return data.getLowAdj();
-				}
-			}, KESTNER_SMOOTHING_FACTOR);
-		}
 		closeSMA = SmaCalculator.getSMA(getStockData(), new GetDataFunc() {
 			public double getValue(DailyStockData data) {
 				return data.getCloseAdj();
 			}
 		}, KESTNER_SMOOTHING_FACTOR);
 
-	}
-
-	public boolean isMutualFund() {
-		return getSymbol().matches("\\w{4}X");
 	}
 
 	public boolean isBuy() {
@@ -92,14 +81,11 @@ public class KestnerSmaStrategy extends AbstractSmaStrategy {
 	}
 
 	public double getMostRecentClose() {
-		return getStockData().peek().getClose();
+		return getStockData().get(0).getClose();
 	}
 
 	public double getSecondMostRecentClose() {
-		DailyStockData mostRecentClose = getStockData().poll();
-		double close = getStockData().peek().getClose();
-		getStockData().add(mostRecentClose);
-		return close;
+		return getStockData().get(1).getClose();
 	}
 
 	@Override
@@ -112,16 +98,13 @@ public class KestnerSmaStrategy extends AbstractSmaStrategy {
 	}
 
 	public String getAction() {
-		String action;
 		if (isBuy()) {
-			action = "Buy";
+			return "Buy";
 		} else if (isSell()) {
-			action = "Sell";
+			return "Sell";
 		} else {
-			action = "Hold";
+			return "Hold";
 		}
-
-		return action;
 	}
 
 	public String getValuesString() {
@@ -131,16 +114,4 @@ public class KestnerSmaStrategy extends AbstractSmaStrategy {
 				+ TWO_DECIMAL.format(closeSMA);
 	}
 
-	public static String[] getColumnHeaders() {
-		return COLUMNS;
-	}
-
-	public String getHMTLEntries() {
-		return "<td>" + getSymbol() + "</td>" + "<td>" + getDescription()
-				+ "</td>" + "<td>" + getAction() + "</td>" + "<td>"
-				+ TWO_DECIMAL.format(getMostRecentClose()) + "</td>" + "<td>"
-				+ TWO_DECIMAL.format(getHighSMA()) + "</td>" + "<td>"
-				+ TWO_DECIMAL.format(getLowSMA()) + "</td>" + "<td>"
-				+ TWO_DECIMAL.format(getCloseSMA()) + "</td>";
-	}
 }

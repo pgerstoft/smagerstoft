@@ -18,6 +18,8 @@ import org.joda.time.DateTimeConstants;
  */
 public class BusinessDay implements Comparable<BusinessDay>, Serializable {
 
+	public static final int NUMBER_IN_YEAR = 252;
+
 	private static final long serialVersionUID = 1L;
 
 	private static transient Map<Integer, List<DateTime>> computedDates = new HashMap<Integer, List<DateTime>>();

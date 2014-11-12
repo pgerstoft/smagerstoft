@@ -1,20 +1,28 @@
 package com.gerstoft.sma;
 
-import java.util.PriorityQueue;
+import java.util.List;
 
 public class StockDataGetter {
 
-	private final String symbol;
+	private final StockSymbol symbol;
 	private final int lookback;
+	// the last day we are downloading data for (today or earlier)
+	private final BusinessDay lastDay;
 
-	private PriorityQueue<DailyStockData> stockData;
+	private List<DailyStockData> stockData;
 
-	public StockDataGetter(final String symbol, final int lookback) {
-		this.symbol = symbol;
-		this.lookback = lookback;
+	public StockDataGetter(final StockSymbol symbol, final int lookback) {
+		this(symbol, lookback, new BusinessDay());
 	}
 
-	public String getSymbol() {
+	public StockDataGetter(final StockSymbol symbol, final int lookback,
+			final BusinessDay lastDay) {
+		this.symbol = symbol;
+		this.lookback = lookback;
+		this.lastDay = lastDay;
+	}
+
+	public StockSymbol getSymbol() {
 		return symbol;
 	}
 
@@ -22,36 +30,38 @@ public class StockDataGetter {
 		return lookback;
 	}
 
-	/**
-	 * Download closing prices
-	 */
-	public void downloadData() {
-		downloadData(new BusinessDay());
+	public BusinessDay getLastDayOfSeries() {
+		return lastDay;
 	}
 
-	public void downloadData(BusinessDay endDate) {
-		BusinessDay end;
-		if (endDate.isBusinessDay()) {
-			end = endDate;
-		} else {
-			end = endDate.getPreviousBusinessDay();
+	public List<DailyStockData> getStockData() {
+		if (stockData == null) {
+			downloadData();
 		}
 
-		BusinessDay start = end.minusDays(lookback);
-
-		if (!start.isBusinessDay()) {
-			start = start.getPreviousBusinessDay();
-		}
-
-		setStockData(YahooFinanceReader.getYahooFinanceData(symbol, start, end));
-	}
-
-	public PriorityQueue<DailyStockData> getStockData() {
 		return stockData;
 	}
 
-	public void setStockData(final PriorityQueue<DailyStockData> stockData) {
-		this.stockData = stockData;
+	/**
+	 * Download closing prices
+	 */
+	private void downloadData() {
+		BusinessDay last = getValidBusinessDay(lastDay);
+		BusinessDay first = getValidBusinessDay(last.minusDays(lookback));
+
+		this.stockData = new YahooFinanceReader().getYahooFinanceData(symbol,
+				first, last);
+
+		if (stockData.isEmpty()) {
+			throw new IllegalStateException(symbol + " has no data");
+		}
 	}
 
+	private BusinessDay getValidBusinessDay(BusinessDay day) {
+		if (!day.isBusinessDay()) {
+			return day.getPreviousBusinessDay();
+		}
+
+		return day;
+	}
 }
