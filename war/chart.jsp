@@ -46,7 +46,7 @@
 		<div class="row">
 			
 			<div id class="col-md-12"> 
-				<h1 class="page-header"><%=request.getParameter("symbol")%> <small><a href="">Google Finance</a></small></h1>
+				<h1 class="page-header"><%=request.getParameter("symbol")%> <small><a href="https://www.google.com/finance?q=<%=request.getParameter("symbol")%>">Google Finance</a></small></h1>
 				
 				<%@include file="_spinner.html"%>
 				<!--Div that will hold the visualization-->
