@@ -37,7 +37,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] ALEX_SYMBOLS = "BND,DBC,TIP,GSG,RWX,VB,VEU,VNQ,VTI,VWO"
 			.split(",");
 
-	private static final String[] PHILIP_SYMBOLS = "ALFA,SWPPX,SWSSX,SWISX,VWO,SWLBX,SWRSX,SCHH,OTPIX,RWO,USO,GLD,SLV,IEF,GSG"
+	private static final String[] PHILIP_SYMBOLS = "ALFA,SCHX,SCHA,SCHF,VWO,SCHZ,SCHP,SCHH,QQQ,RWO,USO,GLD,SLV,IEF,GSG"
 			.split(",");
 
 	private static final String[] JUSTIN_SYMBOLS = "VMMXX, PFORX, WACPX, VMISX, VSISX, VIFSX, RERGX, MINHX"
