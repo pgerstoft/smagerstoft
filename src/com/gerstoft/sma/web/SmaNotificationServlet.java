@@ -37,7 +37,12 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] ALEX_SYMBOLS = "BND,DBC,TIP,GSG,RWX,VB,VEU,VNQ,VTI,VWO"
 			.split(",");
 
-	private static final String[] PHILIP_SYMBOLS = "ALFA,SCHX,SCHA,SCHF,VWO,SCHZ,SCHP,SCHH,QQQ,RWO,USO,GLD,SLV,IEF,GSG"
+	// SSO - SP 2x
+	// QLD - QQQ 2x
+	// UWM - Russell 2000 2x
+	// DRN - US REIT 3x
+
+	private static final String[] PHILIP_SYMBOLS = "ALFA,SCHX,SCHA,SCHF,VWO,SCHZ,SCHP,SCHH,QQQ,RWO,USO,GLD,SLV,IEF,GSG,JNK"
 			.split(",");
 
 	private static final String[] JUSTIN_SYMBOLS = "VMMXX, PFORX, WACPX, VMISX, VSISX, VIFSX, RERGX, MINHX"
@@ -48,6 +53,9 @@ public class SmaNotificationServlet extends DataSourceServlet {
 
 	private static final String[] COUNTRY_SYMBOLS = "EGPT EWI EDEN EWP EWK EIRL EPI EWQ EIS EZA EWL EWG EWA SPY QQQ EPOL EWC EWU PGJ EWY EWT EWN EWD EWZ GXG EWO IWM EWH IDX EWS EIDO EWM THD TUR GXC FXI EPU EWW JPP EWJ ITF BRF ECH RSX RBL"
 			.split(" ");
+
+	private static final String[] KYLE_SYMBOLS = "DXJ Hedj IEV QQQ SPHB VB RWO ALFA AOMIX CVX DEM DFE DODFX EWW IBM JNK PJP RIG SCJ SDRL SPY T TFMAX VALE VEU VTI VWO ADNL GS IWM MTU PDN QCOM TEVA ARTQX FCNKX FDIKX FSCRX FSPNX HAINX LADYX MADVC PTTRX FBAKX FLPKX PRFDX VMRAX"
+			.split("");
 
 	public static Set<String> ALL_SYMBOLS = new HashSet<String>() {
 		{
@@ -89,7 +97,9 @@ public class SmaNotificationServlet extends DataSourceServlet {
 		String requester = request.getParameter("requester").trim();
 
 		String[] symbols;
-		if ("karen".equals(requester)) {
+		if ("kyle".equals(requester)) {
+			symbols = KAREN_SYMBOLS;
+		} else if ("karen".equals(requester)) {
 			symbols = KAREN_SYMBOLS;
 		} else if ("country".equals(requester)) {
 			symbols = COUNTRY_SYMBOLS;
