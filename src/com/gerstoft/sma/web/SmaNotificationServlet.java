@@ -98,7 +98,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 
 		String[] symbols;
 		if ("kyle".equals(requester)) {
-			symbols = KAREN_SYMBOLS;
+			symbols = KYLE_SYMBOLS;
 		} else if ("karen".equals(requester)) {
 			symbols = KAREN_SYMBOLS;
 		} else if ("country".equals(requester)) {
