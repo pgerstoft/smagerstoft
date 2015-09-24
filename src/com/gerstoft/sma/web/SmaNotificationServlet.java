@@ -57,6 +57,8 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] KYLE_SYMBOLS = "DXJ Hedj IEV QQQ SPHB VB RWO ALFA AOMIX CVX DEM DFE DODFX EWW IBM JNK PJP RIG SCJ SDRL SPY T TFMAX VALE VEU VTI VWO GS IWM MTU PDN QCOM TEVA ARTQX FCNKX FDIKX FSCRX FSPNX HAINX LADYX PTTRX FBAKX FLPKX PRFDX VMRAX"
 			.split(" ");
 
+	private static final String[] DISTRESSED = "vlkay TWTR".split(" ");
+
 	public static Set<String> ALL_SYMBOLS = new HashSet<String>() {
 		{
 			addAll(Arrays.asList(ANDY_SYMBOLS));
@@ -66,6 +68,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 			addAll(Arrays.asList(JUSTIN_SYMBOLS));
 			addAll(Arrays.asList(KAREN_SYMBOLS));
 			addAll(Arrays.asList(COUNTRY_SYMBOLS));
+			addAll(Arrays.asList(DISTRESSED));
 		}
 	};
 
@@ -101,6 +104,8 @@ public class SmaNotificationServlet extends DataSourceServlet {
 			symbols = KYLE_SYMBOLS;
 		} else if ("karen".equals(requester)) {
 			symbols = KAREN_SYMBOLS;
+		} else if ("distressed".equals(requester)) {
+			symbols = DISTRESSED;
 		} else if ("country".equals(requester)) {
 			symbols = COUNTRY_SYMBOLS;
 		} else if ("andy".equals(requester)) {

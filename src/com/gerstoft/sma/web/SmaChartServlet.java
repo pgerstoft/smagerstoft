@@ -3,6 +3,7 @@ package com.gerstoft.sma.web;
 import static com.gerstoft.sma.util.Round.round;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Queue;
@@ -98,11 +99,15 @@ public class SmaChartServlet extends DataSourceServlet {
 		// Fill the data table.
 		try {
 
-			for (int i = 0; i < close.getItemCount() - 1; i++) {
-				TimeSeriesDataItem closeItem = close.getDataItem(i);
-				TimeSeriesDataItem closeSmaItem = closeSma.getDataItem(i);
-				TimeSeriesDataItem highSmaItem = highSma.getDataItem(i);
-				TimeSeriesDataItem lowSmaItem = lowSma.getDataItem(i);
+			for (int i = 0; i < closeSma.getItemCount() - 1; i++) {
+				TimeSeriesDataItem closeItem = close.getDataItem(close
+						.getItemCount() - i - 1);
+				TimeSeriesDataItem closeSmaItem = closeSma.getDataItem(closeSma
+						.getItemCount() - i - 1);
+				TimeSeriesDataItem highSmaItem = highSma.getDataItem(closeSma
+						.getItemCount() - i - 1);
+				TimeSeriesDataItem lowSmaItem = lowSma.getDataItem(lowSma
+						.getItemCount() - i - 1);
 
 				Date date = closeSmaItem.getDate();
 
