@@ -42,7 +42,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	// UWM - Russell 2000 2x
 	// DRN - US REIT 3x
 
-	private static final String[] PHILIP_SYMBOLS = "ALFA,SCHX,SCHA,SCHF,VWO,SCHZ,SCHP,SCHH,QQQ,RWO,USO,GLD,SLV,IEF,GSG,JNK,STIP,VNQI,BNDX,SCHV"
+	private static final String[] PHILIP_SYMBOLS = "ALFA,SCHX,SCHA,SCHF,VWO,SCHZ,SCHP,SCHH,QQQ,RWO,USO,GLD,SLV,IEF,GSG,JNK,STIP,VNQI,BNDX,SCHV,GMOM,VAMO,GVAL,FYLD,GAA,SYLD"
 			.split(",");
 
 	private static final String[] JUSTIN_SYMBOLS = "VMMXX, PFORX, WACPX, VMISX, VSISX, VIFSX, RERGX, MINHX"
