@@ -57,7 +57,8 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] KYLE_SYMBOLS = "DXJ Hedj IEV QQQ SPHB VB RWO ALFA AOMIX CVX DEM DFE DODFX EWW IBM JNK PJP RIG SCJ SDRL SPY T TFMAX VALE VEU VTI VWO GS IWM MTU PDN QCOM TEVA ARTQX FCNKX FDIKX FSCRX FSPNX HAINX LADYX PTTRX FBAKX FLPKX PRFDX VMRAX"
 			.split(" ");
 
-	private static final String[] DISTRESSED = "vlkay TWTR grek cmg".split(" ");
+	private static final String[] DISTRESSED = "vlkay TWTR grek cmg bk cg lnkd"
+			.split(" ");
 
 	public static Set<String> ALL_SYMBOLS = new HashSet<String>() {
 		{
