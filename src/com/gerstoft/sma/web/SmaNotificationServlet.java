@@ -42,7 +42,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	// UWM - Russell 2000 2x
 	// DRN - US REIT 3x
 
-	private static final String[] PHILIP_SYMBOLS = "ALFA,SCHX,SCHA,SCHF,VWO,SCHZ,SCHP,SCHH,QQQ,RWO,USO,GLD,SLV,IEF,GSG,JNK,STIP,VNQI,BNDX,SCHV,GMOM,VAMO,GVAL,FYLD,GAA,SYLD"
+	private static final String[] PHILIP_SYMBOLS = "TLO,ALFA,SCHX,SCHA,SCHF,VWO,SCHZ,SCHP,SCHH,QQQ,RWO,USO,GLD,SLV,IEF,GSG,JNK,STIP,VNQI,BNDX,SCHV,GMOM,VAMO,GVAL,FYLD,GAA,SYLD"
 			.split(",");
 
 	private static final String[] JUSTIN_SYMBOLS = "VMMXX, PFORX, WACPX, VMISX, VSISX, VIFSX, RERGX, MINHX"
@@ -57,7 +57,7 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	private static final String[] KYLE_SYMBOLS = "DXJ Hedj IEV QQQ SPHB VB RWO ALFA AOMIX CVX DEM DFE DODFX EWW IBM JNK PJP RIG SCJ SDRL SPY T TFMAX VALE VEU VTI VWO GS IWM MTU PDN QCOM TEVA ARTQX FCNKX FDIKX FSCRX FSPNX HAINX LADYX PTTRX FBAKX FLPKX PRFDX VMRAX"
 			.split(" ");
 
-	private static final String[] DISTRESSED = "vlkay TWTR grek cmg bk cg lnkd"
+	private static final String[] DISTRESSED = "vlkay TWTR grek cmg bx cg lnkd aapl seas"
 			.split(" ");
 
 	public static Set<String> ALL_SYMBOLS = new HashSet<String>() {
