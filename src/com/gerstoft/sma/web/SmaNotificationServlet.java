@@ -28,11 +28,8 @@ import com.google.visualization.datasource.query.Query;
 @SuppressWarnings("serial")
 public class SmaNotificationServlet extends DataSourceServlet {
 
-	private static final String[] ANDY_SYMBOLS = "MDIDX,ODMAX,PIEQX,AREAX,ATEKX,AUIAX,QUAKX,ABSKX,NMSAX,NTIAX,ALCKX,PEOPX,ANAGX,AGDAX,SNIDX,VIPSX"
+	private static final String[] ANDY_SYMBOLS = "DXHLX,DXELX,DXQLX,DXSLX,DXRLX,BMPIX,IDPIX,INPIX,OEPIX,SMPIX,SLPIX,SGPIX,TEPIX,ULPIX,UGPIX,UUPIX,UBPIX,UMPIX,UOPIX,HCPIX,WCPIX,ENPIX,UAPIX,RYBIX,RYSIX,RYWVX,RYEIX,RYIIX,RYJHX,RYMDX,RYVYX,RYMKX,RYRHX,RYRSX,RYTNX,RYTIX,SFENX,SWSSX,SWSCX"
 			.split(",");
-
-	private static final String[] ANDY_2_SYMBOLS = "DXHLX, DXELX, DXZLX, DXQLX, DXCLX, DXSLX, LEMIX, BMPIX, BIPIX, CNPIX, OEPIX, REPIX, SMPIX, TEPIX, TCPIX, UDPIX, ULPIX, UGPIX, UUPIX, UBPIX, UOPIX, HCPIX, ENPIX, GVPIX, UTPIX, RYCVX, RYVYX, RYSIX, RYEIX, RYGBX, RYOCX, RYNVX, RYTNX, RYZAX, RYPIX, RYWVX, SWANX, SWDSX, SFENX"
-			.split(", ");
 
 	private static final String[] ALEX_SYMBOLS = "BND,DBC,TIP,GSG,RWX,VB,VEU,VNQ,VTI,VWO"
 			.split(",");
@@ -63,7 +60,6 @@ public class SmaNotificationServlet extends DataSourceServlet {
 	public static Set<String> ALL_SYMBOLS = new HashSet<String>() {
 		{
 			addAll(Arrays.asList(ANDY_SYMBOLS));
-			addAll(Arrays.asList(ANDY_2_SYMBOLS));
 			addAll(Arrays.asList(ALEX_SYMBOLS));
 			addAll(Arrays.asList(PHILIP_SYMBOLS));
 			addAll(Arrays.asList(JUSTIN_SYMBOLS));
@@ -111,8 +107,6 @@ public class SmaNotificationServlet extends DataSourceServlet {
 			symbols = COUNTRY_SYMBOLS;
 		} else if ("andy".equals(requester)) {
 			symbols = ANDY_SYMBOLS;
-		} else if ("andy2".equals(requester)) {
-			symbols = ANDY_2_SYMBOLS;
 		} else if ("justin".equals(requester)) {
 			symbols = JUSTIN_SYMBOLS;
 		} else if ("alex".equals(requester) || "ivy".equals(requester)) {
