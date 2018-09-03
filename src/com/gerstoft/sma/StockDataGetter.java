@@ -49,7 +49,7 @@ public class StockDataGetter {
 		BusinessDay last = getValidBusinessDay(lastDay);
 		BusinessDay first = getValidBusinessDay(last.minusDays(lookback));
 
-		this.stockData = new YahooFinanceReader().getYahooFinanceData(symbol,
+		this.stockData = new YahooFinanceReaderV2().getYahooFinanceData(symbol,
 				first, last);
 
 		if (stockData.isEmpty()) {

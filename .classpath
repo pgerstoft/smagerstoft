@@ -10,5 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (3)"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.google.appengine.server.runtimeTarget/Google App Engine"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/YahooFinanceAPI-3.14.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
